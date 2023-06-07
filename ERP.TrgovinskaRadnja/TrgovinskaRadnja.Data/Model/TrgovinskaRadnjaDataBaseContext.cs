@@ -238,6 +238,12 @@ public partial class TrgovinskaRadnjaDataBaseContext : DbContext
             entry.ToTable("SiteUser", tb => tb.HasTrigger("trg_CreateCartOnUserInsert"));
         });
 
+        //da se obrise korpa
+        modelBuilder.Entity<SiteUser>(entry =>
+        {
+            entry.ToTable("SiteUser", tb => tb.HasTrigger("trg_DeleteCartOnUserDelete"));
+        });
+
         modelBuilder.Entity<Stock>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Stock__3213E83F70895808");
