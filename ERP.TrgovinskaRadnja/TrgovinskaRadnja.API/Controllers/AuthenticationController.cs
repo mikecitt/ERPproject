@@ -5,7 +5,6 @@ using TrgovinskaRadnja.Domain.Core.Services;
 using TrgovinskaRadnja.Domain.Dtos;
 using TrgovinskaRadnja.Domain.Dtos.Requests;
 using TrgovinskaRadnja.Data.Extensions;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 
 namespace TrgovinskaRadnja.API.Controllers
@@ -37,7 +36,7 @@ namespace TrgovinskaRadnja.API.Controllers
                 SiteUserDto user = await _userService.GetUserWithEmailAsync(loginRequest.Email);
                 Cart userBasket = await RetrieveBasket(user.Id.ToString());
                 Cart anonBasket = await RetrieveBasket(Request.Cookies["buyerId"]);
-                /*
+                
                 if (anonBasket != null)
                 {
                     if (userBasket != null) _context.Carts.Remove(userBasket);
@@ -45,7 +44,7 @@ namespace TrgovinskaRadnja.API.Controllers
                     Response.Cookies.Delete("buyerId");
                     await _context.SaveChangesAsync();
                 }
-                */
+                
                 return new UserDto
                 {
                     Email = user.Email,
@@ -67,6 +66,7 @@ namespace TrgovinskaRadnja.API.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> RegisterAsync([FromBody] SiteUserDto userDto)
         {
+
             try
             {
                 userDto.Role = Domain.Enums.UserType.Customer;

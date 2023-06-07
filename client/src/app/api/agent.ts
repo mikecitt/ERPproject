@@ -1,12 +1,30 @@
+import { store } from "../store/configureStore";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
 import { history } from "../..";
 import { PaginatedResponse } from "../models/pagination";
-import {  store } from "../store/configureStore";
 
 axios.defaults.baseURL = 'https://localhost:7189/api/'
 axios.defaults.withCredentials = true;
 const responseBody = (response: AxiosResponse) => response.data;
+
+axios.interceptors.request.use((request) => {
+  console.log(`${request.method}: ${request.url}`);
+  if (request.params) console.log(`params:${request.params}`);
+  if (request.data) console.log(`data:${JSON.stringify(request.data)}`);
+
+  try {
+
+    const user = JSON.parse(localStorage.getItem('user')!);
+    const token = user.token;
+    if (token) request.headers.Authorization = `Bearer ${token}`;
+
+  } catch (error) {
+    console.log(error);
+  }
+
+  return request;
+});
 
 
 
@@ -27,13 +45,10 @@ axios.interceptors.response.use(async response => {
   const { data, status } = error.response!;
   switch (status) {
     case 400:
-      toast.error((data as { title: string }).title);
       break;
     case 401:
-      toast.error((data as { title: string }).title);
       break;
     case 404:
-      toast.error((data as { title: string }).title);
       break;
     case 500:
       history.push({
@@ -67,7 +82,15 @@ const Account = {
 }
 
 
+const Orders = {
+  list: () => requests.get('order'),
+  fetch: (id: number) => requests.get(`order/${id}`),
+  create: (values: any) => requests.post('order', values)
+}
 
+const Payments = {
+  createPaymentIntent: () => requests.post('payment', {})
+}
 
 
 const Basket = {
@@ -81,7 +104,9 @@ const Basket = {
 const agent = {
   Catalog,
   Basket,
-  Account
+  Account,
+  Orders,
+  Payments
 }
 
 export default agent;

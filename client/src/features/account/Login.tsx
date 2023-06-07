@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -9,8 +8,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Paper } from '@mui/material';
-import { Link, useHistory } from 'react-router-dom';
-import agent from '../../app/api/agent';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { FieldValues, useForm } from 'react-hook-form';
 import { LoadingButton } from '@mui/lab';
 import { useAppDispatch } from '../../app/store/configureStore';
@@ -24,14 +22,20 @@ export default function Login() {
 
     const history = useHistory();
     const dispatch = useAppDispatch();
+    const location = useLocation<any>();
     const {register, handleSubmit, formState: {isSubmitting, errors, isValid}} = useForm({
-        mode: 'onTouched'
+        mode: 'all'
     });  
     
     async function submitForm(data: FieldValues) {
         
-        await dispatch(signInUser(data));
-        history.push('/catalog');
+        try {
+            await dispatch(signInUser(data));
+            history.push(location?.state?.from.pathname || '/catalog');
+        } catch (error) {
+            console.log(error);
+        }
+      
     }
     return (
         <ThemeProvider theme={defaultTheme}>
@@ -55,7 +59,6 @@ export default function Login() {
                         <TextField
                             margin="normal"
                             fullWidth
-                            id="email"
                             label="Email adresa"
                             autoComplete="email"
                             autoFocus
@@ -68,7 +71,6 @@ export default function Login() {
                             fullWidth
                             label="Lozinka"
                             type="password"
-                            id="password"
                             autoComplete="current-password"
                             {...register('password', {required: 'Password is required'})}
                             error={!!errors.password}

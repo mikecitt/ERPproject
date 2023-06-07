@@ -8,8 +8,12 @@ namespace TrgovinskaRadnja.Domain.Dtos
 {
     public class CartDto : BaseDto
     {
-        public string BuyerId{ get; set; }
+        public string BuyerId { get; set; }
         public List<CartItemDto> Items { get; set; }
 
+        public string PaymentIntentId { get; set; }
+
+
+        public string ClientSecret { get; set; }
     }
 }

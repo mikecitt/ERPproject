@@ -6,9 +6,9 @@ import { accountSlice } from "../../features/account/accountSlice";
 
 export const store = configureStore({
     reducer: {
+        account: accountSlice.reducer,
         catalog: catalogSlice.reducer,
-        basket: basketSlice.reducer,
-        account: accountSlice.reducer
+        basket: basketSlice.reducer
     }
 })
 

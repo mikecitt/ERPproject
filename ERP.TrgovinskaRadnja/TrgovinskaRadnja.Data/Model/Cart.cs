@@ -10,6 +10,10 @@ public partial class Cart : Entity
 
     public virtual ICollection<CartItem> CartItems { get; } = new List<CartItem>();
 
+    public string PaymentIntentId { get; set; }
+    public string ClientSecret { get; set; }
+
+
     public void AddItem(Product product, int quantity)
     {
         if (CartItems.All(item => item.ProductId != product.Id))

@@ -25,6 +25,7 @@ namespace TrgovinskaRadnja.API.Controllers
             _cartService = cartService;
             _mapper = mapper;
             _context = context;
+
         }
 
         [HttpDelete]

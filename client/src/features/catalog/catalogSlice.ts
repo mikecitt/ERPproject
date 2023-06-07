@@ -1,6 +1,6 @@
+import agent from "../../app/api/agent";
 import { createAsyncThunk, createEntityAdapter, createSlice } from "@reduxjs/toolkit";
 import { Product, ProductParams } from "../../app/models/products";
-import agent from "../../app/api/agent";
 import { RootState } from "../../app/store/configureStore";
 import { MetaData } from "../../app/models/pagination";
 
@@ -26,7 +26,7 @@ function getAxiosParams(productParams: ProductParams) {
 function initParams(): ProductParams {
     return {
         pageNumber: 1,
-        pageSize: 3,
+        pageSize: 6,
         orderBy: 'name'
     }
 }

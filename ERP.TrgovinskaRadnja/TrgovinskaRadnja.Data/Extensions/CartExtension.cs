@@ -17,6 +17,8 @@ namespace TrgovinskaRadnja.Data.Extensions
             {
                 Id = cart.Id,
                 BuyerId = cart.BuyerId,
+                PaymentIntentId = cart.PaymentIntentId,
+                ClientSecret = cart.ClientSecret,
                 Items = cart.CartItems.Select(item => new CartItemDto
                 {
                     Name = item.Product.ProductName,

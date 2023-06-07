@@ -10,7 +10,7 @@ namespace TrgovinskaRadnja.Domain.Dtos.Requests
     {
         const int maxPageSize = 50;
 
-        private int _pageSize = 2;
+        private int _pageSize = 6;
         public int PageNumber { get; set; } = 1;
         public int PageSize
         {

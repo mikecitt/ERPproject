@@ -52,6 +52,11 @@ public partial class TrgovinskaRadnjaDataBaseContext : DbContext
                 .HasMaxLength(200)
                 .HasColumnName("buyerId");
 
+            entity.Property(e => e.PaymentIntentId).HasColumnName("PaymentIntentId").HasMaxLength(255);
+            entity.Property(e => e.ClientSecret).HasColumnName("ClientSecret").HasMaxLength(255);
+
+
+
         });
 
         modelBuilder.Entity<CartItem>(entity =>
@@ -167,6 +172,24 @@ public partial class TrgovinskaRadnjaDataBaseContext : DbContext
             entity.Property(e => e.Total)
                 .HasColumnType("numeric(10, 2)")
                 .HasColumnName("total");
+
+
+
+            entity.Property(e => e.BuyerId).HasColumnName("BuyerId").HasMaxLength(200);
+            entity.Property(e => e.ShippingAddress_FullName).HasColumnName("ShippingAddress_FullName").HasMaxLength(200);
+            entity.Property(e => e.ShippingAddress_Address1).HasColumnName("ShippingAddress_Address1").HasMaxLength(200);
+            entity.Property(e => e.ShippingAddress_Address2).HasColumnName("ShippingAddress_Address2").HasMaxLength(200);
+            entity.Property(e => e.ShippingAddress_City).HasColumnName("ShippingAddress_City").HasMaxLength(200);
+            entity.Property(e => e.ShippingAddress_State).HasColumnName("ShippingAddress_State").HasMaxLength(200);
+            entity.Property(e => e.ShippingAddress_Zip).HasColumnName("ShippingAddress_Zip").HasMaxLength(200);
+            entity.Property(e => e.ShippingAddress_Country).HasColumnName("ShippingAddress_Country").HasMaxLength(200);
+
+
+            entity.Property(e => e.DeliveryFee).HasColumnName("DeliveryFee").IsRequired();
+            entity.Property(e => e.OrderStatus).HasColumnName("OrderStatus").IsRequired();
+
+
+
             entity.Property(e => e.UserId).HasColumnName("userID");
 
             entity.HasOne(d => d.User).WithMany(p => p.ShopOrders)
@@ -208,6 +231,11 @@ public partial class TrgovinskaRadnjaDataBaseContext : DbContext
                 .IsRequired()
                 .HasMaxLength(50)
                 .HasColumnName("username");
+        });
+
+        modelBuilder.Entity<SiteUser>(entry =>
+        {
+            entry.ToTable("SiteUser", tb => tb.HasTrigger("trg_CreateCartOnUserInsert"));
         });
 
         modelBuilder.Entity<Stock>(entity =>

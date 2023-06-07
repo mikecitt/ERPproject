@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, isAnyOf } from "@reduxjs/toolkit";
 import { Basket } from "../../app/models/basket";
 import agent from "../../app/api/agent";
 import { getCookie } from "../../app/util/util";
@@ -60,6 +60,9 @@ export const basketSlice = createSlice({
         setBasket: (state,action)  => {
             state.basket = action.payload
         },
+        clearBasket: (state) => {
+            state.basket = null;
+        },
         removeItem: (state,action) =>{
             const {productId,quantity} =action.payload
             const itemIndex = state.basket?.items.findIndex(i => i.productId ===productId);
@@ -76,15 +79,6 @@ export const basketSlice = createSlice({
             state.status = 'pendingAddItem' + action.meta.arg.productId;
         });
        
-        builder.addCase(addBasketItemAsync.fulfilled, (state, action) => {
-            console.log(action) 
-            state.basket = action.payload
-            state.status = 'idle'
-        });
-       
-        builder.addCase(addBasketItemAsync.rejected, (state) => {
-            state.status = 'idle'
-        });
 
         builder.addCase(removeBasketItemAsync.pending, (state, action) => {
             state.status = 'pending' + action.meta.arg.productId + action.meta.arg.name;
@@ -102,8 +96,17 @@ export const basketSlice = createSlice({
             state.status = 'idle';
             console.log(action.payload);
         });
+
+        builder.addMatcher(isAnyOf(addBasketItemAsync.fulfilled, fetchBasketAsync.fulfilled), (state, action) => {
+            state.basket = action.payload;
+            state.status = 'idle';
+        });
+        builder.addMatcher(isAnyOf(addBasketItemAsync.rejected, fetchBasketAsync.rejected), (state, action) => {
+            console.log(action.payload);
+            state.status = 'idle';
+        });
        
     })
 })
 
-export const {setBasket} = basketSlice.actions; 
+export const {setBasket,clearBasket} = basketSlice.actions; 

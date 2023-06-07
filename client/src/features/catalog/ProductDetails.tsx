@@ -15,7 +15,7 @@ export default function ProductDetails() {
     const { id } = useParams<{ id: string }>();
     const {status: productStatus} = useAppSelector(state => state.catalog)
 
-    const product =useAppSelector(state => productSelectors.selectById(state,id));
+    const product =useAppSelector(state => productSelectors.selectById(state,id!));
 
     const [quantity, setQuantity] = useState(0);
 
@@ -23,7 +23,7 @@ export default function ProductDetails() {
 
     useEffect(() => {
         if (item) setQuantity(item.quantity)
-        if(!product) dispatch(fetchProductAsync(parseInt(id)))
+        if(!product) dispatch(fetchProductAsync(parseInt(id!)))
     }, [id, item, dispatch, product])
 
     function hanldeInputChange(event: any) {
