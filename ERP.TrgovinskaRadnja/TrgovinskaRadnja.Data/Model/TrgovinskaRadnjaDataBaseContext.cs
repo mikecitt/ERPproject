@@ -129,6 +129,7 @@ public partial class TrgovinskaRadnjaDataBaseContext : DbContext
             entity.ToTable("Product");
 
             entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.QuantityInStock).HasColumnName("QuantityInStock");
             entity.Property(e => e.CategoryId).HasColumnName("categoryID");
             entity.Property(e => e.Description)
                 .IsRequired()
@@ -183,6 +184,7 @@ public partial class TrgovinskaRadnjaDataBaseContext : DbContext
             entity.Property(e => e.ShippingAddress_State).HasColumnName("ShippingAddress_State").HasMaxLength(200);
             entity.Property(e => e.ShippingAddress_Zip).HasColumnName("ShippingAddress_Zip").HasMaxLength(200);
             entity.Property(e => e.ShippingAddress_Country).HasColumnName("ShippingAddress_Country").HasMaxLength(200);
+            entity.Property(e => e.PaymentIntentId).HasColumnName("PaymentIntentId").HasMaxLength(255);
 
 
             entity.Property(e => e.DeliveryFee).HasColumnName("DeliveryFee").IsRequired();
@@ -238,7 +240,6 @@ public partial class TrgovinskaRadnjaDataBaseContext : DbContext
             entry.ToTable("SiteUser", tb => tb.HasTrigger("trg_CreateCartOnUserInsert"));
         });
 
-        //da se obrise korpa
         modelBuilder.Entity<SiteUser>(entry =>
         {
             entry.ToTable("SiteUser", tb => tb.HasTrigger("trg_DeleteCartOnUserDelete"));

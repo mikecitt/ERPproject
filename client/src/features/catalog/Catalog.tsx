@@ -8,9 +8,9 @@ import ProductList from "./ProductList";
 import ProductSearch from "./ProductSearch";
 
 const sortOptions = [
-    { value: 'name', label: 'Alphabetical' },
-    { value: 'priceDesc', label: 'Price - High to low' },
-    { value: 'price', label: 'Price - Low to high' },
+    { value: 'name', label: 'Abecedno' },
+    { value: 'priceDesc', label: 'Cena - Od vece ka manjoj' },
+    { value: 'price', label: 'Cena - Od manje ka vecoj' },
 ]
 
 export default function Catalog() {

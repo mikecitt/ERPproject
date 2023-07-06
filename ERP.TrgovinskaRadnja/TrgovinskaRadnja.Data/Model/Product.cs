@@ -24,4 +24,7 @@ public partial class Product : Entity
     public virtual Category Category { get; set; }
 
     public virtual ICollection<OrderItem> OrderItems { get; } = new List<OrderItem>();
+
+    public int QuantityInStock { get; set; }
+
 }

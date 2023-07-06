@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Data;
+using TrgovinskaRadnja.Data.Model;
 using TrgovinskaRadnja.Domain.Core.Services;
 using TrgovinskaRadnja.Domain.Dtos;
 
@@ -13,11 +15,14 @@ namespace TrgovinskaRadnja.API.Controllers
     {
         private readonly ICategoryService _categoryService;
         private readonly IMapper _mapper;
+        private readonly TrgovinskaRadnjaDataBaseContext _context;
 
-        public CategoryController(ICategoryService categoryService, IMapper mapper)
+
+        public CategoryController(ICategoryService categoryService, IMapper mapper, TrgovinskaRadnjaDataBaseContext context)
         {
             _categoryService = categoryService;
             _mapper = mapper;
+            _context = context;
         }
 
         [HttpPost]
@@ -58,6 +63,7 @@ namespace TrgovinskaRadnja.API.Controllers
             }
         }
 
+      
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAsync(int id, [FromBody] CategoryDto categoryDto)
         {
@@ -65,6 +71,14 @@ namespace TrgovinskaRadnja.API.Controllers
 
             return NoContent();
         }
+
+        [HttpGet]
+        public async Task<ActionResult<List<Category>>> GetAll() 
+        {
+            var data = await _context.Categories.ToListAsync();
+            return data;
+        }
+
 
     }
 }

@@ -1,11 +1,9 @@
 import { Box, Button, Paper, Step, StepLabel, Stepper, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FieldValues, FormProvider, useForm } from "react-hook-form";
 import AddressForm from "./AddressForm";
 import PaymentForm from "./PaymentForm";
 import Review from "./Review";
-import { yupResolver } from '@hookform/resolvers/yup';
-import { validationScheme } from "./checkoutValidation";
 import agent from "../../app/api/agent";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import { clearBasket } from "../basket/basketSlice";
@@ -53,7 +51,6 @@ export default function CheckoutPage() {
         }
     }
 
-    const currentValidationSchema = validationScheme[activeStep];
 
     const methods = useForm({
         mode: 'all'

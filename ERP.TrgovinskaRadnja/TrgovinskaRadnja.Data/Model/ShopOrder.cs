@@ -35,6 +35,8 @@ public partial class ShopOrder : Entity
     public string ShippingAddress_Zip { get; set; }
     public string ShippingAddress_Country { get; set; }
 
+    public string PaymentIntentId { get; set; }
+
     public decimal GetTotal() 
     {
         return Total + DeliveryFee;

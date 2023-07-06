@@ -74,7 +74,8 @@ namespace TrgovinskaRadnja.API.Controllers
                 DeliveryFee = deliveryFee,
                 Total = sum,
                 OrderStatus = Domain.Enums.OrderStatus.Pending,
-                IsDeleted = false
+                IsDeleted = false,
+                PaymentIntentId = basket.PaymentIntentId
             };
 
             _context.ShopOrders.Add(order);

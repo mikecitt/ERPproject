@@ -25,37 +25,56 @@ namespace TrgovinskaRadnja.API.Controllers
             _context = context;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
-        public async Task<IActionResult> CreateAsync([FromBody] ProductDto productDto)
+        public async Task<ActionResult<Data.Model.Product>> CreateProduct([FromForm] CreateProductDto productDto)
         {
-            await _productService.CreateAsync(productDto);
+            Data.Model.Product product = _mapper.Map<Data.Model.Product>(productDto);
 
-            return NoContent();
+            if (productDto.File != null)
+            {
+              string test = productDto.File.FileName;
+            }
+
+            product.CategoryId = 1;
+            if (productDto.File != null)
+            {
+                product.ImagePath = "/images/products/" + productDto.File.FileName;
+            }
+            product.StockStatus = product.QuantityInStock > 0;
+            _context.Products.Add(product);
+
+            var result = await _context.SaveChangesAsync() > 0;
+
+            if (result) return CreatedAtRoute("GetProduct", new { Id = product.Id }, product);
+
+            return BadRequest(new ProblemDetails { Title = "Problem creating new product" });
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAsync(int id)
+        public async Task<ActionResult> DeleteProduct(int id)
         {
+            var product = await _context.Products.FindAsync(id);
 
-            try
-            {
-                await _productService.DeleteAsync(id);
-                return NoContent();
-            }
-            catch (KeyNotFoundException)
-            {
-                return NotFound();
-            }
+            if (product == null) return NotFound();
+
+            product.IsDeleted = true;
+
+            var result = await _context.SaveChangesAsync() > 0;
+
+            if (result) return Ok();
+
+            return BadRequest(new ProblemDetails { Title = "Problem deleting product" });
         }
 
-        
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetByIdAsync(int id)
+
+        [HttpGet("{id}", Name = "GetProduct")]
+        public async Task<ActionResult<ProductDto>> GetByIdAsync(int id)
         {
             try
             {
                 ProductDto productDto = await _productService.GetByIdAsync(id);
-                return Ok(productDto);
+                return productDto;
             }
             catch (KeyNotFoundException)
             {
@@ -69,6 +88,7 @@ namespace TrgovinskaRadnja.API.Controllers
             var query = _context.Products
                 .Sort(productParams.OrderBy)
                 .Search(productParams.SearchTerm)
+                .Where(x=> !x.IsDeleted)
                 .AsQueryable();
 
             var products = await PaginatedList<Data.Model.Product>.ToPagedList<Data.Model.Product>(query, productParams.PageNumber,
@@ -80,12 +100,27 @@ namespace TrgovinskaRadnja.API.Controllers
 
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAsync(int id, [FromBody] ProductDto productDto)
+        [Authorize(Roles = "Admin")]
+        [HttpPut]
+        public async Task<ActionResult<Data.Model.Product>> UpdateProduct([FromForm] UpdateProductDto productDto)
         {
-            await _productService.UpdateAsync(id, productDto);
+            var product = await _context.Products.FindAsync(productDto.Id);
 
-            return NoContent();
+            if (product == null) return NotFound();
+
+            _mapper.Map(productDto, product);
+
+            if(productDto.File != null) 
+            {
+                product.ImagePath = "/images/products/" + productDto.File.FileName;
+            }
+            product.StockStatus = product.QuantityInStock > 0;
+
+            var result = await _context.SaveChangesAsync() > 0;
+
+            if (result) return Ok(product);
+
+            return BadRequest(new ProblemDetails { Title = "Problem updating product" });
         }
 
     }

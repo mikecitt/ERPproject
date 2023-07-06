@@ -17,6 +17,9 @@ namespace TrgovinskaRadnja.API.Mapper
             CreateMap<ProductDto, Product>().ReverseMap();
             CreateMap<StockDto, Stock>().ReverseMap();
             CreateMap<WarehouseDto, Warehouse>().ReverseMap();
+            CreateMap<CreateProductDto, Product>().ReverseMap();
+            CreateMap<UpdateProductDto, Product>().ReverseMap();
+
         }
     }
 }

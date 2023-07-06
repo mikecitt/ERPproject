@@ -25,8 +25,7 @@ namespace TrgovinskaRadnja.Services.Services
 
             var intent = new PaymentIntent();
             var subtotal = basket.CartItems.Sum(item => item.Quantity * item.Product.Price);
-            var deliveryFee = subtotal > 5000 ? 0 : 250;
-            //neki komentar
+            var deliveryFee = subtotal > 10000 ? 0 : 500;
 
             if (string.IsNullOrEmpty(basket.PaymentIntentId))
             {

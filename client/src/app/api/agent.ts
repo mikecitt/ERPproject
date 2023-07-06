@@ -1,8 +1,6 @@
-import { store } from "../store/configureStore";
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { toast } from "react-toastify";
-import { history } from "../..";
 import { PaginatedResponse } from "../models/pagination";
+import { router } from "../router/Routes";
 
 axios.defaults.baseURL = 'https://localhost:7189/api/'
 axios.defaults.withCredentials = true;
@@ -51,10 +49,7 @@ axios.interceptors.response.use(async response => {
     case 404:
       break;
     case 500:
-      history.push({
-        pathname: '/server-error',
-        state: { error: data }
-      });
+      router.navigate('/server-error', {state: {error: data}});
       break;
     default:
       break;
@@ -62,11 +57,26 @@ axios.interceptors.response.use(async response => {
   return Promise.reject(error.response);
 })
 
+function createFormData(item: any) {
+  let formData = new FormData();
+  for (const key in item) {
+      formData.append(key, item[key])
+  }
+  return formData;
+}
+
+
 const requests = {
   get: (url: string, params?: URLSearchParams) => axios.get(url, { params }).then(responseBody),
   post: (url: string, body: {}) => axios.post(url, body).then(responseBody),
   put: (url: string, body: {}) => axios.put(url, body).then(responseBody),
   delete: (url: string) => axios.delete(url).then(responseBody),
+  postForm: (url: string, data: FormData) => axios.post(url, data, {
+    headers: { 'Content-type': 'multipart/form-data' }
+  }).then(responseBody),
+  putForm: (url: string, data: FormData) => axios.put(url, data, {
+    headers: { 'Content-type': 'multipart/form-data' }
+  }).then(responseBody)
 }
 
 const Catalog = {
@@ -81,6 +91,9 @@ const Account = {
   currentUser: () => requests.get('authentication/currentUser')
 }
 
+const Category = {
+  get: () => requests.get('category')
+}
 
 const Orders = {
   list: () => requests.get('order'),
@@ -100,13 +113,20 @@ const Basket = {
 
 }
 
+const Admin = {
+  createProduct: (product: any) => requests.postForm('product', createFormData(product)),
+  updateProduct: (product: any) => requests.putForm('product', createFormData(product)),
+  deleteProduct: (id: number) => requests.delete(`product/${id}`)
+}
 
 const agent = {
   Catalog,
   Basket,
   Account,
   Orders,
-  Payments
+  Payments,
+  Admin,
+  Category
 }
 
 export default agent;

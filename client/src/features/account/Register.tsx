@@ -6,7 +6,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { Alert, AlertTitle, List, ListItem, ListItemText, Paper } from '@mui/material';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { LoadingButton } from '@mui/lab';
 import agent from '../../app/api/agent';
@@ -14,25 +14,11 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 
 export default function Register() {
-    const history = useHistory();
+    const navigate = useNavigate();
     const [validationErrors, setValidationErrors ] = useState([]);
-    const { register, handleSubmit, setError, formState: { isSubmitting, errors, isValid } } = useForm({
+    const { register, handleSubmit, formState: { isSubmitting, errors, isValid } } = useForm({
         mode: 'all'
     });
-
-    function handleApiErrors(errors: any) {
-        if (errors) {
-            errors.forEach((error: string) => {
-                if (error.includes('Password')) {
-                    setError('password', { message: error })
-                } else if (error.includes('Email')) {
-                    setError('email', { message: error })
-                } else if (error.includes('Username')) {
-                    setError('username', { message: error })
-                }
-            });
-        }
-    }
 
     return (
         <Container component={Paper} maxWidth="sm" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', p: 4 }}>
@@ -47,7 +33,7 @@ export default function Register() {
                     agent.Account.register(data)
                     .then(() => {
                         toast.success('Registracija uspesna- mozete se prijaviti');
-                        history.push('/login');
+                        navigate('/login');
                     })
                         .catch(error => setValidationErrors(error)))
                 }
