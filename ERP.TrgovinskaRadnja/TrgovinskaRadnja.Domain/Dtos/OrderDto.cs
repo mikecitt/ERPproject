@@ -10,6 +10,8 @@ namespace TrgovinskaRadnja.Domain.Dtos
     {
         public int Id { get; set; }
         public string BuyerId { get; set; }
+
+        public string UserName { get; set; }
         public Address ShippingAddress { get; set; }
         public string FullName { get; set; }
         public string Address1 { get; set; }

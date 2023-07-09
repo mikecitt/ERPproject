@@ -88,7 +88,11 @@ const Catalog = {
 const Account = {
   login: (values: any) => requests.post('authentication/login', values),
   register: (values: any) => requests.post('authentication/register', values),
-  currentUser: () => requests.get('authentication/currentUser')
+  currentUser: () => requests.get('authentication/currentUser'),
+  profile: () => requests.get('user/profile'),
+  getAll: () => requests.get('user'),
+  delete: (id: number) => requests.delete(`user/${id}`),
+  deletePersonal: () => requests.delete('user/profile')
 }
 
 const Category = {
@@ -98,7 +102,8 @@ const Category = {
 const Orders = {
   list: () => requests.get('order'),
   fetch: (id: number) => requests.get(`order/${id}`),
-  create: (values: any) => requests.post('order', values)
+  create: (values: any) => requests.post('order', values),
+  all: () => requests.get('order/allOrders')
 }
 
 const Payments = {

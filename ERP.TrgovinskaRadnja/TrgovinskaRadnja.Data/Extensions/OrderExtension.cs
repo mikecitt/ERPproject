@@ -21,6 +21,7 @@ namespace TrgovinskaRadnja.Data.Extensions
                 DeliveryFee = order.DeliveryFee,
                 OrderStatus = order.OrderStatus.ToString(),
                 Subtotal = order.GetTotal(),
+                UserName = order.User.Username,
                 FullName = order.ShippingAddress_FullName,
                 Address1 = order.ShippingAddress_Address1,
                 Address2 = order.ShippingAddress_Address2,

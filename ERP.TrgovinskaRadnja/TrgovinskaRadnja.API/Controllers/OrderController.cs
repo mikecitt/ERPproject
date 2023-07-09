@@ -27,6 +27,14 @@ namespace TrgovinskaRadnja.API.Controllers
                 .ToListAsync();
         }
 
+        [HttpGet("allOrders")]
+        public async Task<ActionResult<List<OrderDto>>> GetAllOrders()
+        {
+            return await _context.ShopOrders
+                .ProjectOrderToOrderDto()
+                .ToListAsync();
+        }
+
         [HttpGet("{id}", Name = "GetOrder")]
         public async Task<ActionResult<OrderDto>> GetOrder(int id)
         {

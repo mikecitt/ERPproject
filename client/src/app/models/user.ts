@@ -6,3 +6,12 @@ export interface User{
     basket?: Basket;
     roles?: string[];
 }
+
+export interface SiteUser
+{
+    username: string,
+    email: string,
+    firstName : string,
+    lastName: string,
+    phone: string
+}
