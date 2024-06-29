@@ -1,0 +1,1 @@
+stripe.exe listen --forward-to https://localhost:7189/api/payment/webhook
