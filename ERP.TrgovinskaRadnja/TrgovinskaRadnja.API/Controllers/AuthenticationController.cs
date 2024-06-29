@@ -32,7 +32,7 @@ namespace TrgovinskaRadnja.API.Controllers
         {
             try
             {
-                string token = await _authenticationService.AuthenticateAccountAsync(loginRequest.Email, loginRequest.Password,false);
+                string token = await _authenticationService.AuthenticateAccountAsync(loginRequest.Email, loginRequest.Password,true);
                 SiteUserDto user = await _userService.GetUserWithEmailAsync(loginRequest.Email);
                 Cart userBasket = await RetrieveBasket(user.Id.ToString());
                 Cart anonBasket = await RetrieveBasket(Request.Cookies["buyerId"]);

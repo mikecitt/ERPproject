@@ -1,18 +1,18 @@
-import React from 'react';
-import { Typography, Box } from '@mui/material';
-import { Transition } from 'react-transition-group';
+import React from "react";
+import { Typography, Box } from "@mui/material";
+import { Transition } from "react-transition-group";
 
 const duration = 500; // Animation duration in milliseconds
 
 const defaultStyle = {
   transition: `transform ${duration}ms ease-in-out, opacity ${duration}ms ease-in-out`,
-  transform: 'translateY(50px)',
+  transform: "translateY(50px)",
   opacity: 0,
 };
 
 const transitionStyles: { [key: string]: any } = {
-  entering: { transform: 'translateY(50px)', opacity: 0 },
-  entered: { transform: 'translateY(0)', opacity: 1 },
+  entering: { transform: "translateY(50px)", opacity: 0 },
+  entered: { transform: "translateY(0)", opacity: 1 },
 };
 
 const ContactPage: React.FC = () => {
@@ -41,13 +41,13 @@ const ContactPage: React.FC = () => {
               kontaktirajte:
             </Typography>
             <Typography variant="body1" gutterBottom>
-              Email: info@svestotreba.com
+              Email: info@climber.rs
             </Typography>
             <Typography variant="body1" gutterBottom>
-              Telefon: +381 123 456 789
+              Telefon: +381 66 123 123
             </Typography>
             <Typography variant="body1" gutterBottom>
-              Adresa: Bulevar oslobođenja 22, Novi Sad
+              Adresa: Balzakova 1, Novi Sad
             </Typography>
             <Typography variant="body1">
               Očekujemo vaše poruke i radujemo se saradnji!
