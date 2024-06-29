@@ -26,12 +26,13 @@ namespace TrgovinskaRadnja.Services.Services
             var intent = new PaymentIntent();
             var subtotal = basket.CartItems.Sum(item => item.Quantity * item.Product.Price);
             var deliveryFee = subtotal > 10000 ? 0 : 500;
+            var Amount = (long)(subtotal + deliveryFee) * 100;
 
             if (string.IsNullOrEmpty(basket.PaymentIntentId))
             {
                 var options = new PaymentIntentCreateOptions
                 {
-                    Amount = (long)(subtotal + deliveryFee),
+                    Amount = Amount,
                     Currency = "rsd",
                     PaymentMethodTypes = new List<string> { "card" }
                 };
@@ -41,7 +42,7 @@ namespace TrgovinskaRadnja.Services.Services
             {
                 var options = new PaymentIntentUpdateOptions
                 {
-                    Amount = (long)(subtotal + deliveryFee),
+                    Amount = Amount
                 };
                 await service.UpdateAsync(basket.PaymentIntentId, options);
             }

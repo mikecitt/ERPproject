@@ -31,16 +31,7 @@ namespace TrgovinskaRadnja.API.Controllers
         {
             Data.Model.Product product = _mapper.Map<Data.Model.Product>(productDto);
 
-            if (productDto.File != null)
-            {
-              string test = productDto.File.FileName;
-            }
 
-            product.CategoryId = 1;
-            if (productDto.File != null)
-            {
-                product.ImagePath = "/images/products/" + productDto.File.FileName;
-            }
             product.StockStatus = product.QuantityInStock > 0;
             _context.Products.Add(product);
 

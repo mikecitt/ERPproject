@@ -56,7 +56,7 @@ namespace TrgovinskaRadnja.API.Controllers
             var json = await new StreamReader(HttpContext.Request.Body).ReadToEndAsync();
 
             var stripeEvent = EventUtility.ConstructEvent(json, Request.Headers["Stripe-Signature"],
-                _config["StripeSettings:WhSecret"]);
+                _config["StripeSettings:WhSecret"], 300, false);
 
             var charge = (Charge)stripeEvent.Data.Object;
             

@@ -20,7 +20,7 @@ namespace TrgovinskaRadnja.Domain.Dtos
         public decimal Price { get; set; }
 
         [Required]
-        public IFormFile File { get; set; }
+        public string ImagePath { get; set; }
 
         [Required]
         public int QuantityInStock { get; set; }
