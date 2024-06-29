@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrgovinskaRadnja.API", "TrgovinskaRadnja.API\TrgovinskaRadnja.API.csproj", "{A2051AD3-F843-4FD3-BF95-A4CEE4E6FCF4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{A2051AD3-F843-4FD3-BF95-A4CEE4E6FCF4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrgovinskaRadnja.Data", "TrgovinskaRadnja.Data\TrgovinskaRadnja.Data.csproj", "{3A57FFBA-A98C-42AF-9BDB-4ABCA46A7BC1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{3A57FFBA-A98C-42AF-9BDB-4ABCA46A7BC1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrgovinskaRadnja.Domain", "TrgovinskaRadnja.Domain\TrgovinskaRadnja.Domain.csproj", "{EF56787A-A093-411C-AB09-D1A78B4F511F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{EF56787A-A093-411C-AB09-D1A78B4F511F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrgovinskaRadnja.Services", "TrgovinskaRadnja.Services\TrgovinskaRadnja.Services.csproj", "{30C56FA0-42C4-4F7C-8FBE-4BB356A2FE2B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{30C56FA0-42C4-4F7C-8FBE-4BB356A2FE2B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
